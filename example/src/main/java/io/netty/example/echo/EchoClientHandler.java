@@ -33,10 +33,15 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
      * Creates a client-side handler.
      */
     public EchoClientHandler() {
-        firstMessage = Unpooled.buffer(EchoClient.SIZE);
-        for (int i = 0; i < firstMessage.capacity(); i ++) {
-            firstMessage.writeByte((byte) i);
-        }
+        // 方法1：使用原始的字节填充（注释掉的原始代码）
+//        firstMessage = Unpooled.buffer(EchoClient.SIZE);
+//        for (int i = 0; i < firstMessage.capacity(); i ++) {
+//            firstMessage.writeByte((byte) i);
+//        }
+        
+        // 方法2：将字符串转换为ByteBuf
+        String message = "hello netty";
+        firstMessage = Unpooled.copiedBuffer(message, java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @Override
